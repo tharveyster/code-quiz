@@ -10,11 +10,20 @@ body {
     right: 10px;
 }
 
-#main {
+.container {
     width: 100%;
+}
+
+#startUp {
     margin: 0 auto;
     padding: 40px 0;
     text-align: center;
+    max-width: 550px;
+}
+
+#questions {
+    margin: 0 auto;
+    padding: 40px 0;
     max-width: 550px;
 }
 
@@ -24,4 +33,13 @@ h1 {
 
 button {
     margin-top: 10px;
+}
+
+#questions, #timesUp {
+    display: none;
+}
+
+.answers {
+    list-style-type: none;
+    margin-bottom: 10px;
 }

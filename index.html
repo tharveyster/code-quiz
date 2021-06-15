@@ -1,18 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Code Quiz</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="./assets/css/reset.css">
-        <link rel="stylesheet" href="./assets/css/style.css">
-    </head>
-    <body>
-        <div id="highScoreLink"></div>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Code Quiz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./assets/css/reset.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+    <header>
+        <div id="highScoreLink">
+            <a href="#">View High Scores</a>
+        </div>
         <div id="clock"></div>
-        <div id="main"></div>
-        
-        <script src="./assets/js/script.js"></script>
-    </body>
+    </header>
+    <main>
+        <div class="container">
+            <section id="startUp">
+                <h1>Code Quiz Challenge</h1>
+                <p>Try to answer the following code related questions within the time limit. Keep in mind that incorrect
+                    answers will penalize your score/time by ten seconds!</p>
+                <button id="startButton">Start</button>
+            </section>
+
+            <section id="questions">
+                <p id="question"></p>
+                <ul class="answers">
+                    <li><button id="option1" class="optionButton" value="0">Test1</button></li>
+                    <li><button id="option2" class="optionButton" value="1">Test2</button></li>
+                    <li><button id="option3" class="optionButton" value="2">Test3</button></li>
+                    <li><button id="option4" class="optionButton" value="3">Test4</button></li>
+                </ul>
+                <div id="result">
+                    <hr>
+                </div>
+            </section>
+
+            <section id="timesUp">
+                <h2>Time's up!</h2>
+                <p>Your final score is: <span id="finalScore"></span></p>
+                <p>Enter initials: <span><input placeholder="Enter initials..." id="initials" /></span>
+                    <button id="postScore">Submit</button>
+                </p>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="./assets/js/script.js"></script>
+</body>
+
 </html>
