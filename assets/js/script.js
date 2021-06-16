@@ -27,6 +27,7 @@ var questions = [
     }
 ]
 
+// Declare all global variables
 var start = document.querySelector("#startButton");
 var timer;
 var questionCount;
@@ -43,19 +44,27 @@ var result = document.querySelector("#result");
 var gameOver = document.querySelector("#timesUp");
 var finalScore = document.querySelector("#finalScore");
 
+// Start button event listener
 start.addEventListener("click", startQuiz);
 
+// Countdown timer function
 function countdownTimer() {
     timer = 75;
     var countdown = setInterval(function () {
-
+        // End game if time runs our or all questions answered
         if (timer === 0 || questionCount === questions.length) {
             clearInterval(countdown);
             document.getElementById("clock").innerHTML = "Game over!";
             questionsEl.style.display = "none";
             clockEl.style.display = "none";
             gameOver.style.display = "block";
-            finalScore.textContent = timer;
+            // Avoid negative scores
+            if (timer >= 0) {
+                finalScore.textContent = timer;
+            } else {
+                finalScore.textContent = 0;
+            }
+        // Continue timer if time remaining and all questions not answered
         } else {
             document.getElementById("clock").innerHTML = "Time: " + timer;
             timer -= 1;
@@ -63,6 +72,7 @@ function countdownTimer() {
     }, 1000);
 }
 
+// Hide start section and show/start questions section
 function startQuiz() {
     startUpEl.style.display = "none";
     questionsEl.style.display = "block";
@@ -72,6 +82,7 @@ function startQuiz() {
     askQuestions(questionCount);
 }
 
+// Prepare questions and answers for display
 function askQuestions(id) {
     if (id < questions.length) {
         questionEl.textContent = questions[id].question;
@@ -82,31 +93,33 @@ function askQuestions(id) {
     }
 }
 
+// Check to see if answers are correct
 function checkAnswer(event) {
     event.preventDefault();
-    
+    // Show answer result section
     result.style.display = "block";
     var p = document.createElement("p");
     result.appendChild(p);
-
+    // Display result message for 1 second
     setTimeout(function () {
         p.style.display = "none";
     }, 1000);
-
+    // Check to see if each answer is correct or wrong and post results to answer result section
     if (questions[questionCount].correct === event.target.value) {
         p.textContent = "Correct!";
     } else if (questions[questionCount].correct !== event.target.value) {
         timer = timer - 10;
         p.textContent = "Wrong!";
     }
-
+    // Increment question number
     if (questionCount < questions.length) {
         questionCount++;
     }
-
+    // Ask next question
     askQuestions(questionCount);
 }
 
+// Event listener for question answers
 optionButton.forEach(item => {
     item.addEventListener("click", checkAnswer);
 });

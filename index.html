@@ -12,20 +12,23 @@
 
 <body>
     <header>
+        <!-- High scores link -->
         <div id="highScoreLink">
             <a href="#">View High Scores</a>
         </div>
+        <!-- Countdown timer -->
         <div id="clock"></div>
     </header>
     <main>
         <div class="container">
+            <!-- Startup page that shows when the app is launched -->
             <section id="startUp">
                 <h1>Code Quiz Challenge</h1>
                 <p>Try to answer the following code related questions within the time limit. Keep in mind that incorrect
                     answers will penalize your score/time by ten seconds!</p>
                 <button id="startButton">Start</button>
             </section>
-
+            <!-- Questions section that displays when the game is started -->
             <section id="questions">
                 <p id="question"></p>
                 <ul class="answers">
@@ -38,7 +41,7 @@
                     <hr>
                 </div>
             </section>
-
+            <!-- Time's up section that displays when the game is over -->
             <section id="timesUp">
                 <h2>Time's up!</h2>
                 <p>Your final score is: <span id="finalScore"></span></p>
