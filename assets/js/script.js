@@ -2,34 +2,35 @@
 var questions = [
     {
         question: "Commonly Used data types DO NOT include:",
-        options: ["stings", "alerts", "booleans", "numbers"],
-        correct: "alerts"
+        options: ["strings", "alerts", "booleans", "numbers"],
+        correct: "2"
     },
     {
         question: "The condition in an if / else statment is enclosed within ________:",
         options: ["quotes", "curly brackets", "parentheses", "square brackets"],
-        correct: "parentheses"
+        correct: "3"
     },
     {
         question: "Arrays in JavaScript can be used to store ________:",
         options: ["numbers and strings", "other arrays", "booleans", "all of the above"],
-        correct: "all of the above"
+        correct: "4"
     },
     {
         question: "String values must be enclosed within ________ when being assigned to variables.",
         options: ["commas", "curly brackets", "quotes", "parentheses"],
-        correct: "quotes"
+        correct: "3"
     },
     {
         question: "A very useful tool used during development and debugging for printing content to the debugger is:",
         options: ["JavaScript", "terminal / bash", "for loops", "console.log"],
-        correct: "console.log"
+        correct: "4"
     }
 ]
 
 var start = document.querySelector("#startButton");
 var timer;
 var questionCount;
+var clockEl = document.querySelector("#clock");
 var startUpEl = document.querySelector("#startUp");
 var questionsEl = document.querySelector("#questions");
 var questionEl = document.querySelector("#question");
@@ -38,6 +39,9 @@ var option1Button = document.querySelector("#option1");
 var option2Button = document.querySelector("#option2");
 var option3Button = document.querySelector("#option3");
 var option4Button = document.querySelector("#option4");
+var result = document.querySelector("#result");
+var gameOver = document.querySelector("#timesUp");
+var finalScore = document.querySelector("#finalScore");
 
 start.addEventListener("click", startQuiz);
 
@@ -45,9 +49,13 @@ function countdownTimer() {
     timer = 75;
     var countdown = setInterval(function () {
 
-        if (timer <= 0) {
+        if (timer === 0 || questionCount === questions.length) {
             clearInterval(countdown);
-            document.getElementById("clock").innerHTML = "Time has expired!";
+            document.getElementById("clock").innerHTML = "Game over!";
+            questionsEl.style.display = "none";
+            clockEl.style.display = "none";
+            gameOver.style.display = "block";
+            finalScore.textContent = timer;
         } else {
             document.getElementById("clock").innerHTML = "Time: " + timer;
             timer -= 1;
@@ -74,8 +82,29 @@ function askQuestions(id) {
     }
 }
 
-function checkAnswer() {
-    console.log("Button clicked")
+function checkAnswer(event) {
+    event.preventDefault();
+    
+    result.style.display = "block";
+    var p = document.createElement("p");
+    result.appendChild(p);
+
+    setTimeout(function () {
+        p.style.display = "none";
+    }, 1000);
+
+    if (questions[questionCount].correct === event.target.value) {
+        p.textContent = "Correct!";
+    } else if (questions[questionCount].correct !== event.target.value) {
+        timer = timer - 10;
+        p.textContent = "Wrong!";
+    }
+
+    if (questionCount < questions.length) {
+        questionCount++;
+    }
+
+    askQuestions(questionCount);
 }
 
 optionButton.forEach(item => {
