@@ -143,14 +143,36 @@ function saveScore(event) {
     var inits = postInitials.value.toUpperCase();
     // Add score and initials to score high array
     highScoreList.push({ initials: inits, score: finalScore.textContent });
-    console.log(highScoreList);
     // Add score to high score list
     for (var i = 0; i < highScoreList.length; i++) {
         var li = document.createElement("li");
         li.textContent = highScoreList[i].initials + ': ' + highScoreList[i].score;
         highScoreListEl.append(li);
     }
+    // Add score to local storage
+    storeHighScores();
 }
 
 // Submit score event listener
 postScoreButton.addEventListener("click", saveScore);
+
+// Save scores to local storage
+function storeHighScores() {
+    localStorage.setItem("scoreList", JSON.stringify(highScoreList));
+}
+
+// Go back to start section
+goBack.addEventListener("click", function() {
+    highScores.style.display = "none";
+    startUpEl.style.display = "block";
+})
+
+// Clear scores event listener
+clearHighScores.addEventListener("click", clearScores);
+
+// Clear scores function
+function clearScores() {
+    localStorage.clear();
+    highScoreListEl.innerHTML = "";
+    highScoreList = [];
+}
