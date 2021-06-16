@@ -144,6 +144,7 @@ function saveScore(event) {
     // Add score and initials to score high array
     highScoreList.push({ initials: inits, score: finalScore.textContent });
     // Add score to high score list
+    highScoreListEl.innerHTML = "";
     for (var i = 0; i < highScoreList.length; i++) {
         var li = document.createElement("li");
         li.textContent = highScoreList[i].initials + ': ' + highScoreList[i].score;
@@ -165,6 +166,7 @@ function storeHighScores() {
 goBack.addEventListener("click", function() {
     highScores.style.display = "none";
     startUpEl.style.display = "block";
+    highScoreLink.style.display = "block";
 })
 
 // Clear scores event listener
