@@ -24,7 +24,9 @@ body {
 }
 
 /* Questions and time's up sections */
-#questions, #timesUp {
+#questions,
+#timesUp,
+#highScores {
     display: none;
     margin: 0 auto;
     padding: 40px 0;
@@ -35,6 +37,11 @@ body {
 .answers {
     list-style-type: none;
     margin-bottom: 10px;
+}
+
+/* Add space between high score title and score list */
+#highScoreList {
+    margin-top: 10px;
 }
 
 h1 {

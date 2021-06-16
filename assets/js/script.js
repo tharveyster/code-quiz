@@ -30,6 +30,7 @@ var questions = [
 // Declare all global variables
 var start = document.querySelector("#startButton");
 var timer;
+var highScoreLink = document.querySelector("#highScoreLink");
 var questionCount;
 var clockEl = document.querySelector("#clock");
 var startUpEl = document.querySelector("#startUp");
@@ -43,6 +44,13 @@ var option4Button = document.querySelector("#option4");
 var result = document.querySelector("#result");
 var gameOver = document.querySelector("#timesUp");
 var finalScore = document.querySelector("#finalScore");
+var postScoreButton = document.querySelector("#postScore");
+var highScores = document.querySelector("#highScores");
+var highScoreList = [];
+var highScoreListEl = document.querySelector("#highScoreList");
+var postInitials = document.querySelector("#initials")
+var goBack = document.querySelector("#goBack");
+var clearHighScores = document.querySelector("#clearHighScores");
 
 // Start button event listener
 start.addEventListener("click", startQuiz);
@@ -123,3 +131,26 @@ function checkAnswer(event) {
 optionButton.forEach(item => {
     item.addEventListener("click", checkAnswer);
 });
+
+// Save score function
+function saveScore(event) {
+    event.preventDefault();
+    // Hide game over section and show high scores section
+    gameOver.style.display = "none";
+    highScoreLink.style.display = "none";
+    highScores.style.display = "block";
+    // Capitalize initials
+    var inits = postInitials.value.toUpperCase();
+    // Add score and initials to score high array
+    highScoreList.push({ initials: inits, score: finalScore.textContent });
+    console.log(highScoreList);
+    // Add score to high score list
+    for (var i = 0; i < highScoreList.length; i++) {
+        var li = document.createElement("li");
+        li.textContent = highScoreList[i].initials + ': ' + highScoreList[i].score;
+        highScoreListEl.append(li);
+    }
+}
+
+// Submit score event listener
+postScoreButton.addEventListener("click", saveScore);
