@@ -18,6 +18,7 @@ The project can be viewed at <https://tharveyster.github.io/code-quiz/>.
 
 ![The Code Quiz application asks questions about web coding.](./assets/images/code-quiz.png)
 ![The Code Quiz application asks questions about web coding.](./assets/images/code-quiz2.png)
+![The Code Quiz application collects and show high scores.](./assets/images/code-quiz3.png)
 
 ## License
 Copyright 2021 Todd Harvey
