@@ -14,9 +14,10 @@ You can then go back to the start or clear the high scores.
 ## Page Link
 The project can be viewed at <https://tharveyster.github.io/code-quiz/>.
 
-## Screenshot
+## Screenshots
 
 ![The Code Quiz application asks questions about web coding.](./assets/images/code-quiz.png)
+![The Code Quiz application asks questions about web coding.](./assets/images/code-quiz2.png)
 
 ## License
 Copyright 2021 Todd Harvey
