@@ -1,5 +1,5 @@
 // Question array
-var questions = [
+const questions = [
     {
         question: "Commonly Used data types DO NOT include:",
         options: ["strings", "alerts", "booleans", "numbers"],
@@ -28,37 +28,38 @@ var questions = [
 ]
 
 // Declare all global variables
-var start = document.querySelector("#startButton");
-var timer = 75;
-var countdown;
-var highScoreLink = document.querySelector("#highScoreLink");
-var highScoreLinkButton = document.querySelector("#highScoreLinkButton");
-var questionCount;
-var clockEl = document.querySelector("#clock");
-var startUpEl = document.querySelector("#startUp");
-var questionsEl = document.querySelector("#questions");
-var questionEl = document.querySelector("#question");
-var optionButton = document.querySelectorAll("button.optionButton")
-var option1Button = document.querySelector("#option1");
-var option2Button = document.querySelector("#option2");
-var option3Button = document.querySelector("#option3");
-var option4Button = document.querySelector("#option4");
-var result = document.querySelector("#result");
-var gameOver = document.querySelector("#timesUp");
-var finalScore = document.querySelector("#finalScore");
-var postScoreButton = document.querySelector("#postScore");
-var highScores = document.querySelector("#highScores");
-var highScoreList = [];
-var highScoreListEl = document.querySelector("#highScoreList");
-var postInitials = document.querySelector("#initials")
-var goBack = document.querySelector("#goBack");
-var clearHighScores = document.querySelector("#clearHighScores");
+const start = document.querySelector("#startButton");
+let timer = 75;
+let countdown;
+const highScoreLink = document.querySelector("#highScoreLink");
+const highScoreLinkButton = document.querySelector("#highScoreLinkButton");
+let questionCount;
+const clockEl = document.querySelector("#clock");
+const startUpEl = document.querySelector("#startUp");
+const questionsEl = document.querySelector("#questions");
+const optionButton = document.querySelectorAll("button.optionButton")
+const gameOver = document.querySelector("#timesUp");
+const finalScore = document.querySelector("#finalScore");
+const postScoreButton = document.querySelector("#postScore");
+const highScores = document.querySelector("#highScores");
+let highScoreList = [];
+const highScoreListEl = document.querySelector("#highScoreList");
+const postInitials = document.querySelector("#initials")
+const goBack = document.querySelector("#goBack");
+const clearHighScores = document.querySelector("#clearHighScores");
 
-// Start button event listener
-start.addEventListener("click", startQuiz);
+// Hide start section and show/start questions section
+const startQuiz = () => {
+    startUpEl.style.display = "none";
+    questionsEl.style.display = "block";
+    questionCount = 0;
+
+    countdownTimer();
+    askQuestions(questionCount);
+}
 
 // Countdown timer function
-function countdownTimer() {
+const countdownTimer = () => {
     timer = 75;
     clockEl.style.display = "block";
     countdown = setInterval(function () {
@@ -83,19 +84,14 @@ function countdownTimer() {
     }, 1000);
 }
 
-// Hide start section and show/start questions section
-function startQuiz() {
-    startUpEl.style.display = "none";
-    questionsEl.style.display = "block";
-    questionCount = 0;
-
-    countdownTimer();
-    askQuestions(questionCount);
-}
-
 // Prepare questions and answers for display
-function askQuestions(id) {
-    if (id < questions.length) {
+const askQuestions = (id) => {
+    const questionEl = document.querySelector("#question");
+    const option1Button = document.querySelector("#option1");
+    const option2Button = document.querySelector("#option2");
+    const option3Button = document.querySelector("#option3");
+    const option4Button = document.querySelector("#option4");
+        if (id < questions.length) {
         questionEl.textContent = questions[id].question;
         option1Button.textContent = questions[id].options[0];
         option2Button.textContent = questions[id].options[1];
@@ -105,11 +101,12 @@ function askQuestions(id) {
 }
 
 // Check to see if answers are correct
-function checkAnswer(event) {
+const checkAnswer = (event) => {
+    const result = document.querySelector("#result");
+    const p = document.createElement("p");
     event.preventDefault();
     // Show answer result section
     result.style.display = "block";
-    var p = document.createElement("p");
     result.appendChild(p);
     // Display result message for 1 second
     setTimeout(function () {
@@ -130,26 +127,21 @@ function checkAnswer(event) {
     askQuestions(questionCount);
 }
 
-// Event listener for question answers
-optionButton.forEach(item => {
-    item.addEventListener("click", checkAnswer);
-});
-
 // Save score function
-function saveScore(event) {
+const saveScore = (event) => {
+    // Capitalize initials
+    let inits = postInitials.value.toUpperCase();
     event.preventDefault();
     // Hide game over section and show high scores section
     gameOver.style.display = "none";
     highScoreLink.style.display = "none";
     highScores.style.display = "block";
-    // Capitalize initials
-    var inits = postInitials.value.toUpperCase();
     // Add score and initials to score high array
     highScoreList.push({ initials: inits, score: finalScore.textContent });
     // Add score to high score list
     highScoreListEl.innerHTML = "";
-    for (var i = 0; i < highScoreList.length; i++) {
-        var li = document.createElement("li");
+    for (let i = 0; i < highScoreList.length; i++) {
+        const li = document.createElement("li");
         li.textContent = highScoreList[i].initials + ': ' + highScoreList[i].score;
         highScoreListEl.append(li);
     }
@@ -157,13 +149,53 @@ function saveScore(event) {
     storeHighScores();
 }
 
-// Submit score event listener
-postScoreButton.addEventListener("click", saveScore);
-
 // Save scores to local storage
-function storeHighScores() {
+const storeHighScores = () => {
     localStorage.setItem("highScoreList", JSON.stringify(highScoreList));
 }
+
+// Clear scores function
+const clearScores = () => {
+    localStorage.clear();
+    highScoreListEl.innerHTML = "";
+    highScoreList = [];
+}
+
+// View high scores function
+const viewHighScores = () => {
+    let retrieveScores = localStorage.getItem("highScoreList");
+    startUpEl.style.display = "none";
+    questionsEl.style.display = "none";
+    gameOver.style.display = "none";
+    highScoreLink.style.display = "none";
+    clearInterval(countdown);
+    timer = 75;
+    clockEl.textContent = "Time: " + timer;
+    clockEl.style.display = "none";
+    highScores.style.display = "block";
+    retrieveScores = JSON.parse(retrieveScores);
+    if (retrieveScores !== null) {
+        highScoreList = [];
+        highScoreListEl.innerHTML = "";
+        for (let i = 0; i < retrieveScores.length; i++) {
+            const li2 = document.createElement("li");
+            li2.textContent = retrieveScores[i].initials + ": " + retrieveScores[i].score;
+            highScoreListEl.appendChild(li2);
+            highScoreList.push({ initials: retrieveScores[i].initials, score: retrieveScores[i].score });
+        }
+    }
+}
+
+// Start button event listener
+start.addEventListener("click", startQuiz);
+
+// Event listener for question answers
+optionButton.forEach(item => {
+    item.addEventListener("click", checkAnswer);
+});
+
+// Submit score event listener
+postScoreButton.addEventListener("click", saveScore);
 
 // Go back to start section
 goBack.addEventListener("click", function() {
@@ -176,37 +208,5 @@ goBack.addEventListener("click", function() {
 // Clear scores event listener
 clearHighScores.addEventListener("click", clearScores);
 
-// Clear scores function
-function clearScores() {
-    localStorage.clear();
-    highScoreListEl.innerHTML = "";
-    highScoreList = [];
-}
-
 // View high scores event listener
 highScoreLinkButton.addEventListener("click", viewHighScores);
-
-// View high scores function
-function viewHighScores() {
-    startUpEl.style.display = "none";
-    questionsEl.style.display = "none";
-    gameOver.style.display = "none";
-    highScoreLink.style.display = "none";
-    clearInterval(countdown);
-    timer = 75;
-    clockEl.textContent = "Time: " + timer;
-    clockEl.style.display = "none";
-    highScores.style.display = "block";
-    var retrieveScores = localStorage.getItem("highScoreList");
-    retrieveScores = JSON.parse(retrieveScores);
-    if (retrieveScores !== null) {
-        highScoreList = [];
-        highScoreListEl.innerHTML = "";
-        for (var i = 0; i < retrieveScores.length; i++) {
-            var li2 = document.createElement("li");
-            li2.textContent = retrieveScores[i].initials + ": " + retrieveScores[i].score;
-            highScoreListEl.appendChild(li2);
-            highScoreList.push({ initials: retrieveScores[i].initials, score: retrieveScores[i].score });
-        }
-    }
-}
